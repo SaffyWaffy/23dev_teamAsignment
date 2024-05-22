@@ -10,15 +10,14 @@
     <?php include '../includes/navbar.php'; ?>
 </head>
 <body>
-    <main>
-        <div class="controls">
+       <header> <div class="controls">
             <button id="refresh">Refresh</button>
             <button class="group-size" data-size="2">2 Leden per groep</button>
             <button class="group-size" data-size="3">3 Leden per groep</button>
             <button class="group-size" data-size="4">4 Leden per groep</button>
             <button class="group-size" data-size="5">5 Leden per groep</button>
-        </div>
-        
+        </div></header>
+         <main>
         <div class="groups">
             <?php
             session_start();
