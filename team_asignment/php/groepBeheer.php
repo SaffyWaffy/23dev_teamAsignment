@@ -1,193 +1,84 @@
 <?php include '../includes/database.php'; ?>
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groepen Beheren</title>
     <link rel="stylesheet" href="../css/style.css">
     <?php include '../includes/navbar.php'; ?>
-    <title>Groepsbeheer</title>
-    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<main>
-    <div class="container">
-        <div class="wrapper">
-            <h2>Personen groep 1</h2>
-            <div class="name-container">
-                <p>Justin Croes</p>
-                <div class="icons">
-                    <a href="updateview.php"><i class="fas fa-pen"></i></a>
-                  <a href=""><i class="fas fa-trash-can"></i></a>
-                </div>
-            </div>
-            <div class="name-container">
-                <p>Naam</p>
-                <div class="icons">
-                <a href="updateview.php"><i class="fas fa-pen"></i></a>
-                    <i class="fas fa-trash-can"></i>
-                </div>
-            </div>
-            <div class="name-container">
-                <p>Naam</p>
-                <div class="icons">
-                <a href="updateview.php"><i class="fas fa-pen"></i></a>
-                    <i class="fas fa-trash-can"></i>
-                </div>
-            </div>
+    <main>
+        <div class="groups">
+            <?php
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['groupId']) && isset($_POST['groupName'])) {
+                // Update group name in the database
+                $groupId = $_POST['groupId'];
+                $groupName = $_POST['groupName'];
+
+                $stmt = $conn->prepare("UPDATE groep SET groepnaam = ? WHERE groepid = ?");
+                $stmt->bind_param("si", $groupName, $groupId);
+
+                if ($stmt->execute()) {
+                    echo "<div class='success-message'>Group name updated successfully!</div><br>";
+                } else {
+                    echo "<div class='error'>Failed to update group name.</div><br>";
+                }
+                $stmt->close();
+            }
+
+            // Fetch groups and their members from the database
+            $sql = "SELECT g.groepid, g.groepnaam, p.voornaam 
+                    FROM groep g 
+                    LEFT JOIN persoon p ON g.groepid = p.groepid
+                    ORDER BY g.groepid, p.voornaam";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                $groups = [];
+                while ($row = $result->fetch_assoc()) {
+                    $groupId = $row['groepid'];
+                    if (!isset($groups[$groupId])) {
+                        $groups[$groupId] = [
+                            'groepnaam' => $row['groepnaam'],
+                            'personen' => []
+                        ];
+                    }
+                    if ($row['voornaam']) {
+                        $groups[$groupId]['personen'][] = $row['voornaam'];
+                    }
+                }
+
+                foreach ($groups as $groupId => $group) {
+                    echo "<div class='group'>";
+                    echo "<form method='POST' action='groepBeheer.php'>";
+                    echo "<input type='hidden' name='groupId' value='$groupId'>";
+                    echo "<label for='groupName$groupId'>Group Name: </label>";
+                    echo "<input type='text' id='groupName$groupId' name='groupName' value='" . htmlspecialchars($group['groepnaam']) . "' required>";
+                    echo "<button type='submit'>Update</button>";
+                    echo "</form>";
+                    echo "<ul>";
+                    foreach ($group['personen'] as $persoon) {
+                        echo "<li>" . htmlspecialchars($persoon) . "</li>";
+                    }
+                    echo "</ul>";
+                    echo "</div>";
+                }
+            } else {
+                echo "No groups found.";
+            }
+
+            $conn->close();
+            ?>
         </div>
-        <div class="wrapper">
-            <h2>Personen groep 2</h2>
-            <div class="name-container">
-                <p>Tygo van der Bij</p>
-                <div class="icons">
-                <a href="updateview.php"><i class="fas fa-pen"></i></a>
-                    <i class="fas fa-trash-can"></i>
-                </div>
-            </div>
-            <div class="name-container">
-                <p>Naam</p>
-                <div class="icons">
-                <a href="updateview.php"><i class="fas fa-pen"></i></a>
-                    <i class="fas fa-trash-can"></i>
-                </div>
-            </div>
-            <div class="name-container">
-                <p>Naam</p>
-                <div class="icons">
-                <a href="updateview.php"><i class="fas fa-pen"></i></a>
-                    <i class="fas fa-trash-can"></i>
-                </div>
-            </div>
-        </div>
-        <div class="wrapper">
-            <h2>Personen groep 3</h2>
-            <div class="name-container">
-                <p>Naam</p>
-                <div class="icons">
-                <a href="updateview.php"><i class="fas fa-pen"></i></a>
-                    <i class="fas fa-trash-can"></i>
-                </div>
-            </div>
-            <div class="name-container">
-                <p>Naam</p>
-                <div class="icons">
-                <a href="updateview.php"><i class="fas fa-pen"></i></a>
-                    <i class="fas fa-trash-can"></i>
-                </div>
-            </div>
-            <div class="name-container">
-                <p>Naam</p>
-                <div class="icons">
-                <a href="updateview.php"><i class="fas fa-pen"></i></a>
-                    <i class="fas fa-trash-can"></i>
-                </div>
-            </div>
-        </div>
-        <div class="wrapper">
-            <h2>Personen groep 4</h2>
-            <div class="name-container">
-                <p>Naam</p>
-                <div class="icons">
-                <a href="updateview.php"><i class="fas fa-pen"></i></a>
-                    <i class="fas fa-trash-can"></i>
-                </div>
-            </div>
-            <div class="name-container">
-                <p>Naam</p>
-                <div class="icons">
-                <a href="updateview.php"><i class="fas fa-pen"></i></a>
-                    <i class="fas fa-trash-can"></i>
-                </div>
-            </div>
-            <div class="name-container">
-                <p>Naam</p>
-                <div class="icons">
-                <a href="updateview.php"><i class="fas fa-pen"></i></a>
-                <a href="delete.php"> <i class="fas fa-trash-can"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
+    </main>
+    <script src="../javascript/script.js"></script>
 </body>
-
-
 <!-- footer -->
 <div class="footer">
     <?php include '../includes/footer.php'; ?>
 </div>
-<?php 
-
-// Include config file
-// require_once "../include/config.php";
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "groep generator";
-
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-// Check connection
-if (!$conn) {
-  die("Connection failed: " . mysqli_connect_error());
-}
-// echo "Connected successfully";
-
-//DELETE
-
-
-// Include config file
-// require_once "../include/config.php";
-
-// Process delete operation after confirmation
-if(isset($_POST["id"]) && !empty($_POST["id"])){
-
-    
-    // Prepare a delete statement
-    $sql = "DELETE FROM user WHERE id = ?";
-    
-    if($stmt = mysqli_prepare($conn, $sql)){
-        // Bind variables to the prepared statement as parameters
-        mysqli_stmt_bind_param($stmt, "i", $param_id);
-        
-        // Set parameters
-        $param_id = trim($_POST["id"]);
-        
-        // Attempt to execute the prepared statement
-        if(mysqli_stmt_execute($stmt)){
-            // Records deleted successfully. Redirect to landing page
-            header("location: ../index.php");
-            exit();
-        } else{
-            echo "Oops! Something went wrong. Please try again later.";
-        }
-    }
-     
-    // Close statement
-    mysqli_stmt_close($stmt);
-    
-    // Close connection
-    mysqli_close($conn);
- } 
-
-// else{
-//     // Check existence of id parameter
-//     if(empty(trim($_GET["id"]))){
-//         // URL doesn't contain id parameter. Redirect to error page
-//         header("location: ../include/error.php");
-//         exit();
-//     }
-// }
-
-// DELETE END
-?>
 </html>
-
-
-
-
-
-
