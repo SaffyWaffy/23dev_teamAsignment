@@ -7,76 +7,10 @@
     <title>Naam Toevoegen</title>
      <link rel="stylesheet" href="../css/style.css">
      <?php include '../includes/navbar.php'; ?>
-  
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        .container {
-            width: 50%;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            position: relative; /* Voeg toe */
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #4caf50;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
-        .error {
-            color: #f00;
-            margin-top: 5px;
-        }
-        .success-message {
-            text-align: center;
-            margin-top: 20px; /* Verander de marge naar wens */
-        }
-    </style>
 </head>
-<body>
+<body class="Lichaam">
     <h2>Naam Toevoegen</h2>
-    <div class="container">
+    <div class="container1">
         <form action="csv1.php" method="post">
             <label for="voornaam">Voornaam:</label><br>
             <input type="text" id="voornaam" name="voornaam" required><br><br>

@@ -7,34 +7,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <?php include '../includes/navbar.php'; ?>
     <title>Groepsbeheer</title>
-    <style>
-    .container {
-            display: flex;
-            flex-wrap: wrap;
-            width: 50%;
-            height: 480px;
-            margin-top: 10%;
-            gap: 25px;
-        }
-        .wrapper {
-            width: calc(50% - 200px); 
-            padding: 10px;
-            border: 1px solid #000;
-            box-sizing: border-box;
-            margin-top: 20px;
-            margin-left: 40px;
-        }
-        .name-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1px;
-        }
-        .icons {
-            display: flex;
-            gap: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 <main>

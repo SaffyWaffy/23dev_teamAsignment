@@ -10,7 +10,6 @@
     <?php include '../includes/navbar.php'; ?>
 </head>
 <body>
-    
     <main>
         <div class="controls">
             <button id="refresh">Refresh</button>
@@ -64,8 +63,7 @@
             $conn->close();
             ?>
         </div>
-    </main>
-
+        </main>
     <script src="../javascript/script.js"></script>
 </body>
 <!-- footer -->

@@ -1,2 +1,2 @@
 
-    <p>Tygo/Folkert</p>
+    <p>copyright:Tygo / Folkert / Niels</p>

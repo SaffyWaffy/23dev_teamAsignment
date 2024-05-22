@@ -19,7 +19,7 @@
         </nav>
         <h1>Groepsgenerator</h1>
     </header>
-</head>
+</head> 
 <body>
 
     <main>
