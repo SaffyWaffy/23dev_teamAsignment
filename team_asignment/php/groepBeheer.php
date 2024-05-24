@@ -34,7 +34,7 @@ session_start();
 
                 $stmt = $conn->prepare("UPDATE groep SET groepnaam = ? WHERE groepid = ?");
                 $stmt->bind_param("si", $groupName, $groupId);
-
+                
                 if ($stmt->execute()) {
                     echo "<div class='success-message'>Group name updated successfully!</div><br>";
                 } else {
@@ -43,47 +43,57 @@ session_start();
                 $stmt->close();
             }
           
-            // Fetch groups and their members from the database
-            $sql = "SELECT g.groepid, g.groepnaam, p.voornaam 
-        FROM groep g 
-        LEFT JOIN persoon p ON g.groepid = p.groepid
-        WHERE g.stamgroepid = '$stamgroepid' AND p.cohort = '$cohort'
-        ORDER BY g.groepid, p.voornaam";
-            $result = $conn->query($sql);
 
-            if ($result->num_rows > 0) {
-                $groups = [];
-                while ($row = $result->fetch_assoc()) {
-                    $groupId = $row['groepid'];
-                    if (!isset($groups[$groupId])) {
-                        $groups[$groupId] = [
-                            'groepnaam' => $row['groepnaam'],
-                            'personen' => []
-                        ];
-                    }
-                    if ($row['voornaam']) {
-                        $groups[$groupId]['personen'][] = $row['voornaam'];
-                    }
-                }
+             // Fetch groups and their members from the database
+             $sql = "SELECT g.groepid, g.groepnaam, p.voornaam 
+             FROM groep g 
+             LEFT JOIN persoon p ON g.groepid = p.groepid
+             WHERE p.stamgroepid = ? AND p.cohort = ?
+             ORDER BY g.groepid, p.voornaam";
 
-                foreach ($groups as $groupId => $group) {
-                    echo "<div class='group'>";
-                    echo "<form method='POST' action='groepBeheer.php'>";
-                    echo "<input type='hidden' name='groupId' value='$groupId'>";
-                    echo "<label for='groupName$groupId'>Group Name: </label>";
-                    echo "<input type='text' id='groupName$groupId' name='groupName' value='" . htmlspecialchars($group['groepnaam']) . "' required>";
-                    echo "<button type='submit'>Update</button>";
-                    echo "</form>";
-                    echo "<ul>";
-                    foreach ($group['personen'] as $persoon) {
-                        echo "<li>" . htmlspecialchars($persoon) . "</li>";
+                if ($stmt = $conn->prepare($sql)) {
+                    $stmt->bind_param("is", $stamgroepid, $cohort);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+    
+                    if ($result->num_rows > 0) {
+                        $groups = [];
+                        while ($row = $result->fetch_assoc()) {
+                            $groupId = $row['groepid'];
+                            if (!isset($groups[$groupId])) {
+                                $groups[$groupId] = [
+                                    'groepnaam' => $row['groepnaam'],
+                                    'personen' => []
+                                ];
+                            }
+                            if ($row['voornaam']) {
+                                $groups[$groupId]['personen'][] = $row['voornaam'];
+                            }
+                        }
+    
+                        foreach ($groups as $groupId => $group) {
+                            echo "<div class='group'>";
+                            echo "<form method='POST' action='groepBeheer.php'>";
+                            echo "<input type='hidden' name='groupId' value='$groupId'>";
+                            echo "<label for='groupName$groupId'>Group Name: </label>";
+                            echo "<input type='text' id='groupName$groupId' name='groupName' value='" . htmlspecialchars($group['groepnaam']) . "' required>";
+                            echo "<button type='submit'>Update</button>";
+                            echo "</form>";
+                            echo "<ul>";
+                            foreach ($group['personen'] as $persoon) {
+                                echo "<li>" . htmlspecialchars($persoon) . "</li>";
+                            }
+                            echo "</ul>";
+                            echo "</div>";
+                        }
+                    } else {
+                        echo "No groups found.";
                     }
-                    echo "</ul>";
-                    echo "</div>";
+    
+                    $stmt->close();
+                } else {
+                    echo "Failed to prepare the SQL statement.";
                 }
-            } else {
-                echo "No groups found.";
-            }
 
             $conn->close();
             ?>

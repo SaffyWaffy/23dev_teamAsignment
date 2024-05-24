@@ -19,7 +19,7 @@
             <label for="studentnummer">Student Nummer:</label><br>
             <input type="text" id="studentnummer" name="studentnummer" required><br><br>
             <label for="cohort"> cohort:</label><br>  
-            <label for="cohort">bijv. 2023-2027 of 2024-2028</label><br>
+            <label for="cohort">bijv. 2023-2024 of 2024-2025</label><br>
             <input type="text" id="cohort" name="cohort" required><br><br>
             <button type="submit">Toevoegen</button>
         </form>

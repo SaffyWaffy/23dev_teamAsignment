@@ -21,7 +21,7 @@ header {
     background-color: #3A5757;
     color: white;
     text-align: center;
- }
+}
 
 .logo-placeholder {
     display: flex;
@@ -74,26 +74,45 @@ main button {
     margin: 20px;
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
+    position: relative; /* Add this to contain hover text */
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 main button:hover {
     background-color: #4a7474;
     border-color: #3A5757;
 }
+
+/* Styles for always visible text */
+main button .hover-text {
+    visibility: visible;
+    opacity: 1;
+    width: auto;
+    background-color: transparent;
+    color: white;
+    text-align: left;
+    padding: 0;
+    position: static;
+    margin: 0;
+    transition: none;
+}
+
 h1 {
     margin: 0;
     flex-grow: 1;
     text-align: right;
     padding-right: 20px;
 }
-/* drop down menu navbar */
 
+/* drop down menu navbar */
 .dropdown {
     float: left;
     overflow: hidden;
-  }
+}
   
-  .dropdown .dropbtn {
+.dropdown .dropbtn {
     font-size: 16px;  
     border: none;
     outline: none;
@@ -102,42 +121,39 @@ h1 {
     background-color: inherit;
     font-family: inherit;
     margin: 0;
-  }
+}
   
-  .navbar a:hover, .dropdown:hover .dropbtn {
+.navbar a:hover, .dropdown:hover .dropbtn {
     background-color: red;
-  }
+}
   
-  .dropdown-content {
+.dropdown-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-  }
+}
   
-  .dropdown-content a {
+.dropdown-content a {
     float: none;
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     text-align: left;
-  }
+}
   
-  .dropdown-content a:hover {
+.dropdown-content a:hover {
     background-color: #ddd;
-  }
+}
   
-  .dropdown:hover .dropdown-content {
+.dropdown:hover .dropdown-content {
     display: block;
-  }
-
+}
 
 /* groep css */
-
-
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -207,9 +223,7 @@ h1 {
     text-align: center;
 }
 
-
-
-/*groep beheer css */
+/* groep beheer css */
 .container {
     display: flex;
     flex-wrap: wrap;
@@ -218,6 +232,7 @@ h1 {
     margin-top: 10%;
     gap: 25px;
 }
+
 .wrapper {
     width: calc(50% - 200px); 
     padding: 10px;
@@ -226,18 +241,20 @@ h1 {
     margin-top: 20px;
     margin-left: 40px;
 }
+
 .name-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1px;
 }
+
 .icons {
     display: flex;
     gap: 5px;
 }
 
-.wrapped{
+.wrapped {
     width: 600px;
     margin: 0 auto;
 }
@@ -249,7 +266,7 @@ h1 {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: relative; /* Voeg toe */
+    position: relative; /* Added */
 }
 
 h2 {
@@ -294,10 +311,12 @@ button[type="submit"]:hover {
     color: #f00;
     margin-top: 5px;
 }
+
 .success-message {
     text-align: center;
-    margin-top: 20px; /* Verander de marge naar wens */
+    margin-top: 20px; /* Adjusted as needed */
 }
+
 .Lichaam {
     font-family: Arial, sans-serif;
     margin: 0;
