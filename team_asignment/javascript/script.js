@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const groupSizeButtons = document.querySelectorAll('.group-size');
     const refreshButton = document.getElementById('refresh');
     const saveGroupsButton = document.getElementById('saveGroups');
+    const cohortSelect = document.getElementById('cohortSelect');
+    const stamgroepSelect = document.getElementById('stamgroepSelect');
 
     groupSizeButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -48,5 +50,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Failed to save groups.');
             }
         });
+    });
+
+    cohortSelect.addEventListener('change', () => {
+        const cohort = cohortSelect.value;
+        if (cohort) {
+            fetch(`../php/getStamgroepen.php?cohort=${cohort}`)
+                .then(response => response.json())
+                .then(data => {
+                    stamgroepSelect.innerHTML = '<option value="">Selecteer Stamgroep</option>';
+                    data.forEach(stamgroep => {
+                        const option = document.createElement('option');
+                        option.value = stamgroep.stamgroepid;
+                        option.textContent = stamgroep.stamgroepnaam;
+                        stamgroepSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching stamgroepen:', error));
+        } else {
+            stamgroepSelect.innerHTML = '<option value="">Selecteer Stamgroep</option>';
+        }
     });
 });

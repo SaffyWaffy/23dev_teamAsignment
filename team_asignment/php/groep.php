@@ -1,4 +1,6 @@
-<?php include '../includes/database.php'; ?>
+<?php include_once '../includes/database.php';
+session_start(); 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,8 +23,15 @@
          <main>
         <div class="groups">
         <?php
-session_start();
-include '../includes/database.php';
+if (isset($_SESSION['stamgroep']) && isset($_SESSION['cohort'])) {
+    $stamgroepid = $_SESSION['stamgroep'];
+    $cohort = $_SESSION['cohort'];
+
+   
+} else {
+    echo "Stamgroep or Cohort not set in session.";
+}
+
 
 if (isset($_POST['groupSize'])) {
     $_SESSION['groupSize'] = $_POST['groupSize'];
@@ -35,7 +44,7 @@ if (isset($_POST['refreshGroups'])) {
 $groupSize = isset($_SESSION['groupSize']) ? $_SESSION['groupSize'] : 3;
 
 if (!isset($_SESSION['shuffledNames'])) {
-    $sql = "SELECT voornaam FROM persoon";
+    $sql = "SELECT voornaam FROM persoon WHERE stamgroepid = '$stamgroepid' AND cohort = '$cohort'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -104,6 +113,7 @@ $conn->close();
         </div>
         </main>
     <script src="../javascript/script.js"></script>
+    
 </body>
 <!-- footer -->
 <div class="footer">

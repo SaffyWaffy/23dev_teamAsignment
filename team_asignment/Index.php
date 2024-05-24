@@ -1,46 +1,9 @@
 <!DOCTYPE html>
 <html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Groepsgenerator</title>
-    <link rel="stylesheet" href="css/style.css">
-    <header>
-        <div class="logo-placeholder">
-            <a href="index.php">
-                <img src="https://www.firda.nl/themes/custom/corp/logo.svg" alt="Logo">
-            </a>
-        </div>
-        <nav>
-            <a class="navButtons" href="./php/csv1.php" class="button">Naam toevoegen</a>
-            <a class="navButtons" href="./php/groep.php" class="button">Groepen</a>
-            <a class="navButtons" href="./php/groepBeheer.php" class="button">Groepen beheren</a>
-            <a class="navButtons" href="./php/persoonBeheer.php" class="button">Personen beheren</a>
-            
-            <div class="dropdown">
-            <button class="dropbtn">Dropdown 
-            <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-            </div>
-        </div> 
-</div> 
-        </nav>
-        <h1>Groepsgenerator</h1>
-    </header>
-</head> 
 <body>
+<?php
 
-    <main>
-        <button>Toevoegen van namen</button>
-        <button href="groep.php">Groep genereren</button>
-    </main>
+?>
 </body>
-<!-- footer -->
-<div class="footer">
-    <?php include 'includes/footer.php'; ?>
-</div>
+<script>window.location.href = "php/homepage.php";</script>
 </html>

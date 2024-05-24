@@ -16,8 +16,11 @@
             <input type="text" id="voornaam" name="voornaam" required><br><br>
             <label for="achternaam">Achternaam:</label><br>
             <input type="text" id="achternaam" name="achternaam" required><br><br>
-            <label for="achternaam">Student Nummer:</label><br>
+            <label for="studentnummer">Student Nummer:</label><br>
             <input type="text" id="studentnummer" name="studentnummer" required><br><br>
+            <label for="cohort"> cohort:</label><br>  
+            <label for="cohort">bijv. 2023-2027 of 2024-2028</label><br>
+            <input type="text" id="cohort" name="cohort" required><br><br>
             <button type="submit">Toevoegen</button>
         </form>
         <?php
@@ -32,12 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['voornaam']) && isset($
     $voornaam = $conn->real_escape_string($_POST['voornaam']);
     $achternaam = $conn->real_escape_string($_POST['achternaam']);
     $studentnummer = $conn->real_escape_string($_POST['studentnummer']);
- 
+    $cohort = $conn->real_escape_string($_POST['cohort']);
     // SQL-query om gegevens in te voeren
-    $sql = "INSERT INTO persoon (VOORNAAM, ACHTERNAAM, STUDENTNUMMER) VALUES ('$voornaam', '$achternaam', '$studentnummer')";
+    $sql = "INSERT INTO persoon (VOORNAAM, ACHTERNAAM, STUDENTNUMMER, COHORT) VALUES ('$voornaam', '$achternaam', '$studentnummer','$cohort')";
  
     if ($conn->query($sql) === TRUE) {
-        echo "<div class='success-message'>Gegevens succesvol toegevoegd.</div>";
+        echo "<div class='success-message'>Gegevens succesvol toegevoegd.</div><br>";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -58,7 +61,7 @@ if (isset($_POST["import"])) {
             $achternaam = $conn->real_escape_string($column[1]);
             $studentnummer = $conn->real_escape_string($column[2]);
  
-            $sqlInsert = "INSERT INTO persoon (voornaam, achternaam, studentnummer) VALUES ('$voornaam', '$achternaam', '$studentnummer')";
+            $sqlInsert = "INSERT INTO persoon (voornaam, achternaam, studentnummer, cohort) VALUES ('$voornaam', '$achternaam', '$studentnummer', '$cohort')";
             $result = mysqli_query($conn, $sqlInsert);
             if (!empty($result)) {
                 $imported = true;

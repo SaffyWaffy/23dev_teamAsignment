@@ -1,5 +1,8 @@
-<?php include '../includes/database.php'; ?>
-<?php session_start(); ?>
+<?php 
+include '../includes/database.php'; 
+session_start(); 
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +17,16 @@
     <main>
         <div class="groups">
             <?php
+            if (isset($_SESSION['stamgroep']) && isset($_SESSION['cohort'])) {
+                $stamgroepid = $_SESSION['stamgroep'];
+                $cohort = $_SESSION['cohort'];
+            
+               
+            } else {
+                echo "Stamgroep or Cohort not set in session.";
+            }
+
+
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['groupId']) && isset($_POST['groupName'])) {
                 // Update group name in the database
                 $groupId = $_POST['groupId'];
@@ -29,12 +42,13 @@
                 }
                 $stmt->close();
             }
-
+          
             // Fetch groups and their members from the database
             $sql = "SELECT g.groepid, g.groepnaam, p.voornaam 
-                    FROM groep g 
-                    LEFT JOIN persoon p ON g.groepid = p.groepid
-                    ORDER BY g.groepid, p.voornaam";
+        FROM groep g 
+        LEFT JOIN persoon p ON g.groepid = p.groepid
+        WHERE g.stamgroepid = '$stamgroepid' AND p.cohort = '$cohort'
+        ORDER BY g.groepid, p.voornaam";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
